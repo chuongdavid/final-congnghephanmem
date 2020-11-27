@@ -57,6 +57,11 @@
                     <i class="fa fa-list"></i>
                     <span>Danh mục sản phẩm</span></a>
             </li>
+            <li class="nav-item <?php echo isset($open) && $open == "product" ? 'active' : '' ?>">
+                <a class="nav-link" href="<?php echo modulesAdmin("product")?>">
+                    <i class="fa fa-database"></i>
+                    <span>Quản lý sản phẩm</span></a>
+            </li>
             <!-- Divider -->
             <hr class="sidebar-divider">
 

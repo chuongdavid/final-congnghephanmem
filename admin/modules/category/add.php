@@ -12,15 +12,22 @@
             {
                 $error['name'] = " Mời bạn nhập tên danh mục ";
             }
-            if(empty($error['name'])){ //if no error do this
-                $id_insert = $db -> insert("category",$data);
-                if($id_insert>0){
-                    $_SESSION['success'] = 'Thêm mới thành công';
+            if(empty($error)){ //if no error do this
+                $isset = $db -> fetchOne('category',"name = '" .$data['name']. "'");
+                if(count($isset)>0){ //data bi trùng
+                    $_SESSION['error'] = "Tên danh mục đã tồn tại !";
                     redirectAdmin("category");
+                }else{
+                    $id_insert = $db -> insert("category",$data);
+                    if($id_insert>0){
+                        $_SESSION['success'] = 'Thêm mới thành công';
+                        redirectAdmin("category");
+                    }
+                    else{
+                        $_SESSION['error'] = 'Thêm mới thất bại';
+                    }
                 }
-                else{
-                    $_SESSION['error'] = 'Thêm mới thất bại';
-                }
+                
             }
         }
 ?>

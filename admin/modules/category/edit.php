@@ -19,15 +19,34 @@
                 $error['name'] = " Mời bạn nhập tên danh mục ";
             }
             if(empty($error['name'])){ //if no error do this
-                $id_insert = $db -> update("category",$data,array('id' => $id));
-                if($id_insert>0){
-                    $_SESSION['success'] = 'Cập nhật thành công';
-                    redirectAdmin("category");
+                if($data['name']!=$EditCategory['name']){
+                    $isset = $db -> fetchOne('category',"name = '" .$data['name']. "'");
+                    if(count($isset)>0){ //kiem tra data bi trùng
+                        $_SESSION['error'] = "Tên danh mục đã tồn tại !";
+                        redirectAdmin("category");
+                    }else{
+                        $id_insert = $db -> update("category",$data,array('id' => $id));
+                        if($id_insert>0){
+                            $_SESSION['success'] = 'Cập nhật thành công';
+                            redirectAdmin("category");
+                        }
+                        else{
+                            $_SESSION['error'] = 'Dữ liệu không thay đổi';
+                            redirectAdmin("category");
+                        }
+                    }
                 }
                 else{
-                    $_SESSION['error'] = 'Cập nhật thất bại';
-                    redirectAdmin("category");
-                }
+                    $id_insert = $db -> update("category",$data,array('id' => $id));
+                    if($id_insert>0){
+                        $_SESSION['success'] = 'Cập nhật thành công';
+                        redirectAdmin("category");
+                    }
+                    else{
+                        $_SESSION['error'] = 'Dữ liệu không thay đổi';
+                        redirectAdmin("category");
+                    }
+                } 
             }
         }
 ?>
