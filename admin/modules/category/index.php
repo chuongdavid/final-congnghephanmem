@@ -35,6 +35,7 @@
                                 <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Office: activate to sort column ascending" style="width: 65px;">Slug</th>
                                 <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Age: activate to sort column ascending" style="width: 31px;">Created</th>
                                 <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Start date: activate to sort column ascending" style="width: 69px;">Action</th>
+                                <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-label="Start date: activate to sort column ascending" style="width: 69px;">Home</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -47,6 +48,11 @@
                                     <td>
                                         <a class="btn btn-primary btn-xs" href="edit.php?id=<?php echo $item['id']?>"> <i class="fa fa-edit"></i> Sửa</a>
                                         <a class="btn btn-danger btn-xs" href="delete.php?id=<?php echo $item['id']?>"> <i class="fa fa-times"></i> Xóa</a>
+                                    </td>
+                                    <td>
+                                        <a href="home.php?id=<?php echo $item['id']?>" class="btn btn-xs <?php echo $item['home']==1 ? 'btn-info' : 'btn-default' ?>">
+                                            <?php echo $item['home']==1 ? 'Hiển thị' : 'Không' ?>
+                                        </a>
                                     </td>
                                 </tr>
                             <?php $stt++ ;endforeach ?>
