@@ -25,9 +25,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
     {
         $error['email'] = " Email được để trống !";
     }
-    else{
-        
-    }
 
     if($data['phone'] == '')
     {
