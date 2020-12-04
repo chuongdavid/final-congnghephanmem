@@ -29,7 +29,9 @@
                     'price'=> $value['price']
                 ];
                 $id_insert = $db -> insert('orders',$data_orders);
-                // $db -> update('product')
+                $cur_quantity = $data_orders['quantity'];
+                $sql = "UPDATE product set quantity = quantity - ".$data_orders['quantity']." WHERE id = ".$data_orders['product_id']."";
+                $result = mysqli_query($db->link,$sql) or die("Lỗi Truy Vấn Update " .mysqli_error($db->link));
             }
 
             if($option=='email_voucher'){
