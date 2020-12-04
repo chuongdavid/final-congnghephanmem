@@ -11,6 +11,28 @@
         <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
         
         <script  src="js/jquery-3.2.1.min.js"></script>
+        <!-- search-function -->
+        <script>
+            function search(text) {
+            $(document).ready(function () {
+                $option = $("#search_option").val();
+                if (text.length != 0) {
+                    $.ajax({
+                url: 'ajax.php',
+                type: "GET",
+                data:{'option':$option,'text':text},
+                success:function(data){
+                    $(".search-place").html(data);
+                }
+            });
+                } else {
+                $.post("ajax-search-empty.php", { data: text }, function (data) {
+                    $(".search-place").html(data);
+                });
+                }
+            });
+            }
+        </script>
         <script  src="js/bootstrap.min.js"></script>
         <!---->
         <link rel="stylesheet" type="text/css" href="css/slick.css"/>
@@ -33,21 +55,23 @@
                             <div class="col-md-6">
                                 <nav id="header-nav-top">
                                     <ul class="list-inline pull-right" id="headermenu">
-                                        <li>
-                                            <a href=""><i class="fa fa-unlock"></i> Login</a>
-                                        </li>
-                                        <li>
-                                            <a href=""><i class="fa fa-user"></i> My Account <i class="fa fa-caret-down"></i></a>
-                                            <ul id="header-submenu">
-                                                <li><a href="">Contact</a></li>
-                                                <li><a href="">Cart</a></li>
-                                                <li><a href="">Checkout</a></li>
-                                            </ul>
-                                        </li>
-                                        <li>
-                                            <a href=""><i class="fa fa-share-square-o"></i> Checkout</a>
-                                        </li>
-                                        
+                                        <?php if(isset($_SESSION['name_user'])): ?>
+                                            <li>
+                                                <a href="" class="text-danger"><i class="fa fa-user"></i> Xin chào:&nbsp <?= $_SESSION['name_user'] ?> <i class="fa fa-caret-down"></i></a>
+                                                <ul id="header-submenu">
+                                                    <li><a href="">Liên hệ</a></li>
+                                                    <li><a href="gio-hang.php">Giỏ hàng của bạn</a></li>
+                                                    <li><a href="dang-xuat.php">Đăng xuất</a></li>
+                                                </ul>
+                                            </li>                                   
+                                        <?php else: ?>
+                                            <li>
+                                                <a href="dang-nhap.php"><i class="fa fa-unlock"></i> Login</a>
+                                            </li>
+                                            <li>
+                                                <a href="dang-ky.php"><i class="fa fa-unlock"></i> Sign up</a>
+                                            </li>
+                                        <?php endif ?>
                                     </ul>
                                 </nav>
                             </div>
@@ -60,15 +84,14 @@
                             <form class="form-inline">
                                 <div class="form-group">
                                     <label>
-                                        <select name="category" class="form-control">
-                                            <option> All Category</option>
-                                            <option> Dell </option>
-                                            <option> Hp </option>
-                                            <option> Asuc </option>
-                                            <option> Apper </option>
+                                        <select name="category" class="form-control" id="search_option">
+                                            <option> Tất cả danh mục</option>
+                                            <?php foreach ($category as $item):?>
+                                            <option value="<?php echo $item['id']?>"><?php echo $item['name'] ?></option>
+                                            <?php endforeach ?>
                                         </select>
                                     </label>
-                                    <input type="text" name="keywork" placeholder=" input keywork" class="form-control">
+                                    <input onkeyup="search(this.value)" type="text" name="keywork" placeholder=" input keywork" class="form-control">
                                     <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
                                 </div>
                             </form>
@@ -85,7 +108,7 @@
                                 </div>
                                 <div class="pull-right">
                                     <p id="hotline">HOTLINE</p>
-                                    <p>0986420994</p>
+                                    <p>0387845823</p>
                                 </div>
                                 
                             </div>
@@ -101,24 +124,12 @@
                 <div class="container">
                     <nav>
                         <div class="home pull-left">
-                            <a href="">Trang chủ</a>
+                            <a href="index.php">Trang chủ</a>
                         </div>
                         <!--menu main-->
                         <ul id="menu-main">
                             <li>
-                                <a href="">Shop</a>
-                            </li>
-                            <li>
-                                <a href="">Mobile</a>
-                            </li>
-                            <li>
-                                <a href="">Contac</a>
-                            </li>
-                            <li>
-                                <a href="">Blog</a>
-                            </li>
-                            <li>
-                                <a href="">About us</a>
+                                <a href="about-us.php">About us</a>
                             </li>
                         </ul>
                         <!-- end menu main-->
@@ -126,7 +137,7 @@
                         <!--Shopping-->
                         <ul class="pull-right" id="main-shopping">
                             <li>
-                                <a href=""><i class="fa fa-shopping-basket"></i> My Cart </a>
+                                <a href="gio-hang.php"><i class="fa fa-shopping-basket"></i> My Cart </a>
                             </li>
                         </ul>
                         <!--end Shopping-->
@@ -147,121 +158,5 @@
                                 </li>
                                 <?php endforeach ?>
                             </ul>
-                        </div>
-
-                        <div class="box-left box-menu">
-                            <h3 class="box-title"><i class="fa fa-warning"></i>  Sản phẩm mới </h3>
-                           <!--  <marquee direction="down" onmouseover="this.stop()" onmouseout="this.start()"  > -->
-                            <ul>
-                                
-                                <li class="clearfix">
-                                    <a href="">
-                                        <img src="images/16-270x270.png" class="img-responsive pull-left" width="80" height="80">
-                                        <div class="info pull-right">
-                                            <p class="name"> Loa  mới nhất 2016  Loa  mới nhất 2016 Loa  mới nhất 2016</p >
-                                            <b class="price">Giảm giá: 6.090.000 đ</b><br>
-                                            <b class="sale">Giá gốc: 7.000.000 đ</b><br>
-                                            <span class="view"><i class="fa fa-eye"></i> 100000 : <i class="fa fa-heart-o"></i> 10</span>
-                                        </div>
-                                    </a>
-                                </li>
-
-                                 <li class="clearfix">
-                                    <a href="">
-                                        <img src="images/16-270x270.png" class="img-responsive pull-left" width="80" height="80">
-                                        <div class="info pull-right">
-                                            <p class="name"> Loa  mới nhất 2016  Loa  mới nhất 2016 Loa  mới nhất 2016</p >
-                                            <b class="price">Giảm giá: 6.090.000 đ</b><br>
-                                            <b class="sale">Giá gốc: 7.000.000 đ</b><br>
-                                            <span class="view"><i class="fa fa-eye"></i> 100000 : <i class="fa fa-heart-o"></i> 10</span>                                            
-                                        </div>
-                                    </a>
-                                </li>
-
-                                 <li class="clearfix">
-                                    <a href="">
-                                        <img src="images/16-270x270.png" class="img-responsive pull-left" width="80" height="80">
-                                        <div class="info pull-right">
-                                            <p class="name"> Loa  mới nhất 2016  Loa  mới nhất 2016 Loa  mới nhất 2016</p >
-                                            <b class="price">Giảm giá: 6.090.000 đ</b><br>
-                                            <b class="sale">Giá gốc: 7.000.000 đ</b><br>
-                                            <span class="view"><i class="fa fa-eye"></i> 100000 : <i class="fa fa-heart-o"></i> 10</span>
-                                            
-                                        </div>
-                                    </a>
-                                </li>
-
-                                 <li class="clearfix">
-                                    <a href="">
-                                        <img src="images/16-270x270.png" class="img-responsive pull-left" width="80" height="80">
-                                        <div class="info pull-right">
-                                            <p class="name"> Loa  mới nhất 2016  Loa  mới nhất 2016 Loa  mới nhất 2016</p >
-                                            <b class="price">Giảm giá: 6.090.000 đ</b><br>
-                                            <b class="sale">Giá gốc: 7.000.000 đ</b><br>
-                                            <span class="view"><i class="fa fa-eye"></i> 100000 : <i class="fa fa-heart-o"></i> 10</span>
-                                        </div>
-                                    </a>
-                                </li>
-                               
-                            </ul>
-                            <!-- </marquee> -->
-                        </div>
-
-                        <div class="box-left box-menu">
-                            <h3 class="box-title"><i class="fa fa-warning"></i>  Sản phẩm mới </h3>
-                           <!--  <marquee direction="down" onmouseover="this.stop()" onmouseout="this.start()"  > -->
-                            <ul>
-                                
-                                <li class="clearfix">
-                                    <a href="">
-                                        <img src="images/16-270x270.png" class="img-responsive pull-left" width="80" height="80">
-                                        <div class="info pull-right">
-                                            <p class="name"> Loa  mới nhất 2016  Loa  mới nhất 2016 Loa  mới nhất 2016</p >
-                                            <b class="price">Giảm giá: 6.090.000 đ</b><br>
-                                            <b class="sale">Giá gốc: 7.000.000 đ</b><br>
-                                            <span class="view"><i class="fa fa-eye"></i> 100000 : <i class="fa fa-heart-o"></i> 10</span>
-                                        </div>
-                                    </a>
-                                </li>
-
-                                 <li class="clearfix">
-                                    <a href="">
-                                        <img src="images/16-270x270.png" class="img-responsive pull-left" width="80" height="80">
-                                        <div class="info pull-right">
-                                            <p class="name"> Loa  mới nhất 2016  Loa  mới nhất 2016 Loa  mới nhất 2016</p >
-                                            <b class="price">Giảm giá: 6.090.000 đ</b><br>
-                                            <b class="sale">Giá gốc: 7.000.000 đ</b><br>
-                                            <span class="view"><i class="fa fa-eye"></i> 100000 : <i class="fa fa-heart-o"></i> 10</span>                                            
-                                        </div>
-                                    </a>
-                                </li>
-
-                                 <li class="clearfix">
-                                    <a href="">
-                                        <img src="images/16-270x270.png" class="img-responsive pull-left" width="80" height="80">
-                                        <div class="info pull-right">
-                                            <p class="name"> Loa  mới nhất 2016  Loa  mới nhất 2016 Loa  mới nhất 2016</p >
-                                            <b class="price">Giảm giá: 6.090.000 đ</b><br>
-                                            <b class="sale">Giá gốc: 7.000.000 đ</b><br>
-                                            <span class="view"><i class="fa fa-eye"></i> 100000 : <i class="fa fa-heart-o"></i> 10</span>
-                                            
-                                        </div>
-                                    </a>
-                                </li>
-
-                                 <li class="clearfix">
-                                    <a href="">
-                                        <img src="images/16-270x270.png" class="img-responsive pull-left" width="80" height="80">
-                                        <div class="info pull-right">
-                                            <p class="name"> Loa  mới nhất 2016  Loa  mới nhất 2016 Loa  mới nhất 2016</p >
-                                            <b class="price">Giảm giá: 6.090.000 đ</b><br>
-                                            <b class="sale">Giá gốc: 7.000.000 đ</b><br>
-                                            <span class="view"><i class="fa fa-eye"></i> 100000 : <i class="fa fa-heart-o"></i> 10</span>
-                                        </div>
-                                    </a>
-                                </li>
-                               
-                            </ul>
-                            <!-- </marquee> -->
                         </div>
                     </div>

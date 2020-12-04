@@ -1,4 +1,13 @@
 <?php 
+// Import PHPMailer classes into the global namespace
+// These must be at the top of your script, not inside a function
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+
+// Load Composer's autoloader
+require_once __DIR__.'/../vendor/autoload.php';
+require_once __DIR__. "/Database.php";
 function postInput($string)
 {
 	return isset($_POST[$string]) ? $_POST[$string] : '';
@@ -136,6 +145,55 @@ function sale($number)
     }
     else
     {
+        return 10;
+    }
+}
+function send_code_voucher($infor,$email){
+    $mail = new PHPMailer(true);
+    try{
+        //Server settings
+        $mail->CharSet = 'utf-8';                      // Enable verbose debug output
+        $mail->isSMTP();                                            // Send using SMTP
+        $mail->Host       = 'smtp.gmail.com';                    // Set the SMTP server to send through
+        $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
+        $mail->Username   = 'chuongddavid@gmail.com';                     // SMTP username
+        $mail->Password   = 'ieibumydddhemnei';                               // SMTP password
+        $mail->SMTPSecure = 'ssl';         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
+        $mail->Port       = 465;                                    // TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
+
+        //Recipients
+        $mail->setFrom('chuongddavid@gmail.com', 'KAC voucher');
+        $mail->addAddress($email, 'Receiver');     // Add a recipient
+        // $mail->addAddress('ellen@example.com');               // Name is optional
+        // $mail->addReplyTo('info@example.com', 'Information');
+        // $mail->addCC('cc@example.com');
+        // $mail->addBCC('bcc@example.com');
+
+        // // Attachments
+        // $mail->addAttachment('/var/tmp/file.tar.gz');         // Add attachments
+        // $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    // Optional name
+
+        // Content
+        $mail->isHTML(true);                                  // Set email format to HTML
+        $mail->Subject = 'E-Voucher của bạn từ KAC voucher';
+        $mail->Body    = "<p>$infor</p>";
+        // $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+
+        $mail->send();
+        return true;
+    }
+    catch (Exception $e) {
+        return false;
+    }
+}
+function sale_promotion($number){
+    if($number<500000){
+        return 0;
+    }
+    else if($number<1000000){
+        return 5;
+    }
+    else{
         return 10;
     }
 }

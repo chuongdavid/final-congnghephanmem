@@ -19,7 +19,7 @@
                             <img src="<?= base_url() ?>public/images/slide/slide1.jpg" class="img-thumbnail">
                         </section>
                         
-                        <section class="box-main1">
+                        <section class="box-main1 search-place">
                         <?php foreach($data as $key =>$value):?>
                             <h3 class="title-main " style="text-align: left;"><a href="javascript:void(0)"> <?= $key ?> </a> </h3>
                             
@@ -36,7 +36,7 @@
                                     <div class="hidenitem">
                                         <p><a href=""><i class="fa fa-search"></i></a></p>
                                         <p><a href=""><i class="fa fa-heart"></i></a></p>
-                                        <p><a href=""><i class="fa fa-shopping-basket"></i></a></p>
+                                        <p><a href="addcart.php?id=<?php echo $item['id'] ?>"><i class="fa fa-shopping-basket"></i></a></p>
                                     </div>
                                 </div>
                             <?php endforeach ?>  

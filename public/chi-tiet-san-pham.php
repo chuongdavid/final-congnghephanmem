@@ -2,7 +2,6 @@
 
 $id = intval($_GET['id']);
 $product = $db -> fetchID('product',$id);
-_debug($product);
 ?>
 <?php require_once __DIR__. "/../layouts/header.php";?>
 <div class="col-md-9 bor">
@@ -36,7 +35,7 @@ _debug($product);
                                     <?php else: ?>
                                         <li><b class="price"><?php echo formatpricesale($product['price'],$product['sale']) ?> đ</b</li>
                                     <?php endif ?>
-                                    <li><a href="" class="btn btn-default"> <i class="fa fa-shopping-basket"></i>Add TO Cart</a></li>
+                                    <li><a href="addcart.php?id=<?php echo $product['id'] ?>" class="btn btn-default"> <i class="fa fa-shopping-basket"></i>Add TO Cart</a></li>
                                </ul>
                             </div>
 
