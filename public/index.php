@@ -25,6 +25,7 @@
                             
                             <div class="showitem clearfix">
                             <?php foreach($value as $item):?>
+                                
                                 <div class="col-md-3 item-product bor">
                                     <a href="chi-tiet-san-pham.php?id=<?= $item['id'] ?>">
                                         <img src="<?= base_url() ?>public/uploads/product/<?=$item['image'] ?>" class="" width="100%" height="180">

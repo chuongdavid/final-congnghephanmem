@@ -60,7 +60,7 @@
                                                 <a href="" class="text-danger"><i class="fa fa-user"></i> Xin chào:&nbsp <?= $_SESSION['name_user'] ?> <i class="fa fa-caret-down"></i></a>
                                                 <ul id="header-submenu">
                                                     <li><a href="">Liên hệ</a></li>
-                                                    <li><a href="gio-hang.php">Giỏ hàng của bạn</a></li>
+                                                    <li><a href="gio-hang.php">Giỏ hàng</a></li>
                                                     <li><a href="dang-xuat.php">Đăng xuất</a></li>
                                                 </ul>
                                             </li>                                   
